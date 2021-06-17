@@ -1,11 +1,19 @@
-package com.app.financas.model;
+package com.app.financas.models;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.app.financas.enums.TipoEnum;
 
@@ -16,25 +24,43 @@ public class ItemFinanceiro implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id_item_financeiro")
 	private long id;
+	
+	@Enumerated(EnumType.STRING)
 	private TipoEnum tipo;
-	private Double valor;
-	private Categoria categoria;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "data", columnDefinition = "DATE")
+	private Calendar data;
+	
+	@Column
+	private Double valor;	
+	private String descricao;
 	private short qtdParcelas;
 	private short parcelaAtual;
 	
+	@ManyToOne
+	@JoinColumn(name="id_categoria")
+	private Categoria categoria;
 	
 	
 	
-	public ItemFinanceiro(long id, TipoEnum tipo, Double valor, Categoria categoria, short qtdParcelas, short parcelaAtual) {
+	
+
+	public ItemFinanceiro(long id, TipoEnum tipo, Calendar data, Double valor, String descricao, short qtdParcelas,
+			short parcelaAtual, Categoria categoria) {
+		super();
 		this.id = id;
 		this.tipo = tipo;
+		this.data = data;
 		this.valor = valor;
-		this.categoria = categoria;
+		this.descricao = descricao;
 		this.qtdParcelas = qtdParcelas;
 		this.parcelaAtual = parcelaAtual;
+		this.categoria = categoria;
 	}
-	
+
 	public ItemFinanceiro() {
 		
 	}
@@ -75,6 +101,24 @@ public class ItemFinanceiro implements Serializable {
 	}
 	public void setParcelaAtual(short parcelaAtual) {
 		this.parcelaAtual = parcelaAtual;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	
+	
+
+	public Calendar getData() {
+		return data;
+	}
+
+	public void setData(Calendar data) {
+		this.data = data;
 	}
 
 	@Override
