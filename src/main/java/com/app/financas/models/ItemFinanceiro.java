@@ -16,6 +16,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.app.financas.enums.TipoEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class ItemFinanceiro implements Serializable {
@@ -40,6 +41,7 @@ public class ItemFinanceiro implements Serializable {
 	private short qtdParcelas;
 	private short parcelaAtual;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="id_categoria")
 	private Categoria categoria;
