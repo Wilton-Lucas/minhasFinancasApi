@@ -1,5 +1,8 @@
 package com.app.financas.resources;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.financas.dto.CategoriaDTO;
 import com.app.financas.models.Categoria;
 import com.app.financas.services.CategoriaService;
 
@@ -28,6 +32,15 @@ public class CategoriaResource {
 	}
 	
 	//listar todos
+	
+	@GetMapping
+	public ResponseEntity<List<CategoriaDTO>> findAll(){
+		List<Categoria> list = categoriaService.findAll();
+		List<CategoriaDTO> listDTO = list.stream().map(e -> new CategoriaDTO(e)).collect(Collectors.toList());
+		
+		return ResponseEntity.ok().body(listDTO);
+	
+	} 
 	
 	//inserir nova categoria
 	
