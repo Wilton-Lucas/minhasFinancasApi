@@ -11,7 +11,7 @@ public class CategoriaDTO implements Serializable {
 	private static final long serailVersionUID = 1L;
 	
 	
-	private long id;	
+	private Long id;	
 	private TipoEnum tipo;
 	private String descricao;
 	
@@ -22,10 +22,10 @@ public class CategoriaDTO implements Serializable {
 		this.tipo = obj.getTipo();
 		this.descricao = obj.getDescricao();
 	}
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public TipoEnum getTipo() {

@@ -50,7 +50,7 @@ public class ItemFinanceiro implements Serializable {
 	
 	
 
-	public ItemFinanceiro(long id, TipoEnum tipo, Calendar data, Double valor, String descricao, short qtdParcelas,
+	public ItemFinanceiro(Long id, TipoEnum tipo, Calendar data, Double valor, String descricao, short qtdParcelas,
 			short parcelaAtual, Categoria categoria) {
 		super();
 		this.id = id;
@@ -67,10 +67,10 @@ public class ItemFinanceiro implements Serializable {
 		
 	}
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	
