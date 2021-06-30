@@ -4,10 +4,14 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,8 +24,9 @@ import com.app.financas.dto.CategoriaDTO;
 import com.app.financas.models.Categoria;
 import com.app.financas.services.CategoriaService;
 
+@CrossOrigin("*")
 @RestController
-@RequestMapping(value="/categorias")
+@RequestMapping(value="/categoria")
 public class CategoriaResource {
 	
 	@Autowired
@@ -51,7 +56,7 @@ public class CategoriaResource {
 	//inserir nova categoria
 	
 	@PostMapping
-	public ResponseEntity<Categoria> create(@RequestBody Categoria categoria){
+	public ResponseEntity<Categoria> create(@Valid @RequestBody Categoria categoria){
 		categoria = categoriaService.save(categoria);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoria.getId()).toUri();
 		return ResponseEntity.created(uri).build();
@@ -69,12 +74,18 @@ public class CategoriaResource {
 	
 	// alterar categoria
 	@PutMapping(value="/{id}")
-	public ResponseEntity<Categoria> update(@PathVariable Long id, @RequestBody Categoria categoria){
+	public ResponseEntity<Categoria> update(@PathVariable Long id, @Valid @RequestBody Categoria categoria){
 		categoria = categoriaService.update(id, categoria);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().build().toUri();
 		return ResponseEntity.created(uri).body(categoria);
 	}
 	
+	@PatchMapping(value="/{id}")
+	public ResponseEntity<Categoria> updatePatch(@PathVariable Long id, @Valid @RequestBody Categoria categoria){
+		categoria = categoriaService.update(id, categoria);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().build().toUri();
+		return ResponseEntity.created(uri).body(categoria);
+	}
 	
 
 }

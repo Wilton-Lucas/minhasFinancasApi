@@ -12,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import com.app.financas.enums.TipoEnum;
 
@@ -25,10 +27,13 @@ public class Categoria implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_categoria")
-	private Long id;
+	private Long id;	
 	
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.STRING)	
 	private TipoEnum tipo;
+	
+	@NotEmpty(message="Campo DESCRICAO é requerido")
+	@Size(min=3, max=100, message="O campo DESCRICAO deve ter entre 3 e 100 caracteres")
 	private String descricao;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="categoria")

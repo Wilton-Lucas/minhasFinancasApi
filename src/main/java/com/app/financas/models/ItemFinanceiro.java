@@ -14,9 +14,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import com.app.financas.enums.TipoEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class ItemFinanceiro implements Serializable {
@@ -26,7 +31,7 @@ public class ItemFinanceiro implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_item_financeiro")
-	private long id;
+	private Long id;
 	
 	@Enumerated(EnumType.STRING)
 	private TipoEnum tipo;
@@ -35,9 +40,15 @@ public class ItemFinanceiro implements Serializable {
 	@Column(name = "data", columnDefinition = "DATE")
 	private Calendar data;
 	
+	
 	@Column
 	private Double valor;	
+	
+	@NotEmpty(message="campo DESCRICAO deve ser preenchido")
+	@Size(min=3, max=200, message="Campo descricao deve ter entre 3 e 200 caracteres")
 	private String descricao;
+	
+	
 	private short qtdParcelas;
 	private short parcelaAtual;
 	
